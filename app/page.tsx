@@ -162,7 +162,7 @@ export default function Home() {
 
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
           {/* Text + visual */}
-          <Reveal className="order-2 lg:order-1">
+          <Reveal className="order-1 lg:order-2">
             <div className="relative mx-auto flex h-[420px] max-w-sm items-center justify-center">
               <div className="absolute h-72 w-72 rounded-full bg-gray-900/90 animate-float-slow" />
               <div className="relative z-10 flex h-80 w-44 flex-col items-center rounded-[2rem] border-4 border-gray-900 bg-white p-3 shadow-2xl animate-float-slower">
@@ -183,7 +183,7 @@ export default function Home() {
           </Reveal>
 
           {/* Form card */}
-          <Reveal delay={120} className="order-1 lg:order-2">
+          <Reveal delay={120} className="order-2 lg:order-1">
             <h1 className="text-3xl font-extrabold leading-tight text-gray-900 sm:text-4xl lg:text-5xl">
               {t.title}
             </h1>
@@ -204,14 +204,24 @@ export default function Home() {
               </Alert>
             )}
 
-            <div className="mt-8 rounded-3xl border border-gray-100 bg-white p-6 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] sm:p-8">
-              <div className="mb-5 flex items-center justify-between border-b border-gray-100 pb-4">
-                <span className="font-bold text-gray-900">{t.formTitle}</span>
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--mojaz-cream)] text-[var(--mojaz-red)]">
-                  <FileSearch className="h-4 w-4" />
-                </span>
+            <div className="relative mt-8">
+              {/* Ambient glow behind the card */}
+              <div className="absolute -top-8 -left-8 -z-10 h-40 w-40 rounded-full bg-[var(--mojaz-red)]/10 blur-3xl animate-float-slow" />
+              <div className="absolute -bottom-8 -right-8 -z-10 h-40 w-40 rounded-full bg-[var(--mojaz-cream)] blur-3xl animate-float-slower" />
+
+              <div className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white p-6 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_80px_-15px_rgba(207,32,48,0.22)] sm:p-8">
+                {/* Animated accent bar */}
+                <div className="absolute inset-x-0 top-0 h-1 animate-shimmer bg-gradient-to-r from-[var(--mojaz-red)] via-red-300 to-[var(--mojaz-red)]" />
+
+                <div className="mb-5 flex items-center justify-between border-b border-gray-100 pb-4">
+                  <span className="font-bold text-gray-900">{t.formTitle}</span>
+                  <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-[var(--mojaz-cream)] text-[var(--mojaz-red)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                    <span className="absolute inset-0 rounded-full animate-pulse-ring" />
+                    <FileSearch className="h-4 w-4" />
+                  </span>
+                </div>
+                <VinInquiryForm onSuccess={handleSuccess} onError={handleError} isRTL={isRTL} />
               </div>
-              <VinInquiryForm onSuccess={handleSuccess} onError={handleError} isRTL={isRTL} />
             </div>
           </Reveal>
         </div>
