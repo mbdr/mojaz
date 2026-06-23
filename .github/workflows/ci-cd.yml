@@ -1,0 +1,61 @@
+# CI/CD Pipeline
+#
+# - Every push and PR: install, lint, typecheck, build (quality gate).
+# - Push to main only, and only after the gate passes: deploy to Fly.io.
+#
+# Required repo secret: FLY_API_TOKEN (from `fly tokens create deploy`).
+# Fly app secrets (MOJAZ_BASE_URL, MOJAZ_CLIENT_KEY, MOJAZ_PROXY_SECRET,
+# CONFIG_OVERRIDE_TOKEN) are set separately via `fly secrets set` - they are
+# never stored in this repo or in GitHub Actions config.
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  NODE_VERSION: "21"
+
+jobs:
+  ci:
+    name: Lint, typecheck, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+  deploy:
+    name: Deploy to Fly.io
+    needs: ci
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy
+        run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
