@@ -48,6 +48,11 @@ body {
   100% { box-shadow: 0 0 0 14px rgba(207, 32, 48, 0); }
 }
 
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 /* Book-style page turn: hinge on the left edge, page rotates away from the
    viewer with a slight forward lift at the midpoint for a more physical,
    paper-like feel. backface-visibility:hidden makes it disappear past
@@ -74,6 +79,15 @@ body {
 
 .animate-float-slower {
   animation: float-slower 8s ease-in-out infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
 }
 
 .reveal {
