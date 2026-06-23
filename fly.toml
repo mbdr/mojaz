@@ -1,40 +1,39 @@
-# Fly.io app configuration.
-# App name must be globally unique on Fly - if "mojaz-international" is
-# already taken, `fly launch` will prompt for a different one (then update
-# this file to match before any subsequent `fly deploy`).
-app = "mojaz-international"
-primary_region = "iad"
+# Fly.io app configuration. See https://fly.io/docs/reference/configuration/
+# App: https://fly.io/apps/mojaz-international - Hostname: mojaz-international.fly.dev
+
+app = 'mojaz-international'
+primary_region = 'iad'
 
 [build]
-
-[http_service]
-  internal_port = 3000
-  force_https = true
-  auto_stop_machines = "stop"
-  auto_start_machines = true
-  # Keep at least one machine running so report polling (which can run for
-  # up to a few minutes) is never interrupted by a cold start mid-request.
-  min_machines_running = 1
-
-  [[http_service.checks]]
-    grace_period = "10s"
-    interval = "30s"
-    method = "GET"
-    timeout = "5s"
-    path = "/api/health"
-
-[[vm]]
-  memory = "512mb"
-  cpu_kind = "shared"
-  cpus = 1
 
 # Non-secret defaults. Credentials (MOJAZ_BASE_URL, MOJAZ_CLIENT_KEY,
 # MOJAZ_PROXY_SECRET, CONFIG_OVERRIDE_TOKEN) are intentionally NOT set here -
 # this file is committed to git. Set them with:
 #   fly secrets set MOJAZ_BASE_URL=... MOJAZ_CLIENT_KEY=... MOJAZ_PROXY_SECRET=...
 [env]
-  NODE_ENV = "production"
-  MOJAZ_LANGUAGE = "ar"
-  MOJAZ_REQUEST_TIMEOUT = "30000"
-  MOJAZ_POLLING_INTERVAL = "20000"
-  MOJAZ_POLLING_MAX_RETRIES = "9"
+  MOJAZ_LANGUAGE = 'ar'
+  MOJAZ_POLLING_INTERVAL = '20000'
+  MOJAZ_POLLING_MAX_RETRIES = '9'
+  MOJAZ_REQUEST_TIMEOUT = '30000'
+  NODE_ENV = 'production'
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  # Keep at least one machine running so report polling (which can run for
+  # up to a few minutes) is never interrupted by a cold start mid-request.
+  min_machines_running = 1
+
+  [[http_service.checks]]
+    interval = '30s'
+    timeout = '5s'
+    grace_period = '10s'
+    method = 'GET'
+    path = '/api/health'
+
+[[vm]]
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 512
