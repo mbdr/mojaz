@@ -8,7 +8,8 @@ import { getEnvironmentConfig } from "./env";
 export interface MojazApiConfig {
   baseUrl: string;
   clientKey: string;
-  proxySecret: string;
+  appId: string;
+  appKey: string;
   language: string;
   requestTimeout: number;
   pollingInterval: number;
@@ -25,7 +26,8 @@ export function getMojazConfig(): MojazApiConfig {
   return {
     baseUrl: env.mojazBaseUrl,
     clientKey: env.mojazClientKey,
-    proxySecret: env.mojazProxySecret,
+    appId: env.mojazAppId,
+    appKey: env.mojazAppKey,
     language: env.mojazLanguage,
     requestTimeout: env.requestTimeout,
     pollingInterval: env.pollingInterval,
@@ -51,9 +53,9 @@ export const MOJAZ_ENDPOINTS = {
  */
 export function getMojazHeaders(config: MojazApiConfig, language?: string): Record<string, string> {
   return {
-    "Client-Key": config.clientKey,
+    "app-id": config.appId,
+    "app-key": config.appKey,
+    "Client-key": config.clientKey,
     language: (language || config.language).toLowerCase(),
-    "X-3scale-proxy-secret-token": config.proxySecret,
-    "Content-Type": "application/json",
   };
 }

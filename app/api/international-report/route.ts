@@ -122,7 +122,8 @@ export async function GET(request: NextRequest): Promise<NextResponse<Internatio
       pollingInterval: config.pollingInterval,
       pollingMaxRetries: config.pollingMaxRetries,
       clientKey: maskSecret(config.clientKey),
-      proxySecret: maskSecret(config.proxySecret),
+      appId: maskSecret(config.appId),
+      appKey: maskSecret(config.appKey),
     });
 
     console.log(`[API] Creating request for VIN: ${vin}`);

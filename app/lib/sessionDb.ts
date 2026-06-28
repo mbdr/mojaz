@@ -24,7 +24,8 @@ export interface CustomHeader {
 export interface EnvironmentOverride {
   baseUrl?: string;
   clientKey?: string;
-  proxySecret?: string;
+  appId?: string;
+  appKey?: string;
   language?: string;
   configToken?: string;
   /** Arbitrary extra headers forwarded to the upstream Mojaz API call. */

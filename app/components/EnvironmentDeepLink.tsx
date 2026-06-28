@@ -4,7 +4,7 @@
  * Lets a tester point this browser at a different Mojaz environment without
  * rebuilding/redeploying, by visiting a URL like:
  *
- *   /?envBaseUrl=http://localhost:8080&envClientKey=...&envProxySecret=...&configToken=...
+ *   /?envBaseUrl=http://localhost:8080&envClientKey=...&envAppId=...&envAppKey=...&configToken=...
  *
  * On mount: if these params are present, save them to IndexedDB (scoped to
  * this browser only) and strip them from the address bar immediately so the
@@ -29,20 +29,21 @@ export function EnvironmentDeepLink({ isRTL = false }: { isRTL?: boolean }) {
     const params = new URLSearchParams(window.location.search);
     const baseUrl = params.get("envBaseUrl") || undefined;
     const clientKey = params.get("envClientKey") || undefined;
-    const proxySecret = params.get("envProxySecret") || undefined;
+    const appId = params.get("envAppId") || undefined;
+    const appKey = params.get("envAppKey") || undefined;
     const language = params.get("envLanguage") || undefined;
     const configToken = params.get("configToken") || undefined;
 
-    const hasDeepLinkParams = baseUrl || clientKey || proxySecret || language || configToken;
+    const hasDeepLinkParams = baseUrl || clientKey || appId || appKey || language || configToken;
 
     if (hasDeepLinkParams) {
-      setEnvironmentOverride({ baseUrl, clientKey, proxySecret, language, configToken })
+      setEnvironmentOverride({ baseUrl, clientKey, appId, appKey, language, configToken })
         .then(() => setActive(true))
         .catch((error) => console.error("Failed to save environment override:", error));
 
       // Strip the override params from the URL so they don't linger in
       // history or get accidentally shared.
-      ["envBaseUrl", "envClientKey", "envProxySecret", "envLanguage", "configToken"].forEach((key) =>
+      ["envBaseUrl", "envClientKey", "envAppId", "envAppKey", "envLanguage", "configToken"].forEach((key) =>
         params.delete(key)
       );
       const newSearch = params.toString();

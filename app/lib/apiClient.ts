@@ -21,7 +21,8 @@ export async function buildApiHeaders(): Promise<Record<string, string>> {
     const override = await getEnvironmentOverride();
     if (override?.baseUrl) headers["X-Mojaz-Base-Url"] = override.baseUrl;
     if (override?.clientKey) headers["X-Mojaz-Client-Key"] = override.clientKey;
-    if (override?.proxySecret) headers["X-Mojaz-Proxy-Secret"] = override.proxySecret;
+    if (override?.appId) headers["X-Mojaz-App-Id"] = override.appId;
+    if (override?.appKey) headers["X-Mojaz-App-Key"] = override.appKey;
     if (override?.language) headers["X-Mojaz-Language"] = override.language;
     if (override?.configToken) headers["X-Config-Token"] = override.configToken;
 

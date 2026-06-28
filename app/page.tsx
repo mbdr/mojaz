@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   CheckCircle,
@@ -24,6 +24,7 @@ import { InquiryHistory } from "./components/InquiryHistory";
 import { PageFlipCard, FlipPage } from "./components/PageFlipCard";
 import { EnvironmentDeepLink } from "./components/EnvironmentDeepLink";
 import { addHistoryEntry } from "./lib/historyDb";
+import { getStoredLanguage, setStoredLanguage } from "./lib/languagePreference";
 
 type Language = "ar" | "en";
 
@@ -69,6 +70,21 @@ export default function Home() {
   const [pdfData, setPdfData] = useState<InternationalReportApiResponse | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [historyRefreshSignal, setHistoryRefreshSignal] = useState(0);
+
+  // Sync from localStorage after mount (not during initial render, to avoid
+  // a server/client hydration mismatch) so /settings can pick up the same
+  // language preference. Unlike derived-state-from-props cases, this reads
+  // an external browser API unavailable during SSR, so an effect is the
+  // correct tool here, not something to replace with useMemo.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setLanguage(getStoredLanguage());
+  }, []);
+
+  const handleLanguageChange = (next: Language) => {
+    setLanguage(next);
+    setStoredLanguage(next);
+  };
 
   const t = translations[language];
   const isRTL = language === "ar";
@@ -136,7 +152,7 @@ export default function Home() {
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <LanguageSelector currentLanguage={language} onLanguageChange={setLanguage} />
+            <LanguageSelector currentLanguage={language} onLanguageChange={handleLanguageChange} />
             <Link
               href="/settings"
               aria-label={isRTL ? "إعدادات البيئة" : "Environment settings"}

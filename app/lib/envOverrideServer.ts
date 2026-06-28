@@ -19,7 +19,7 @@ import { NextRequest } from "next/server";
 import { MojazApiConfig } from "@/app/config/mojaz.config";
 
 export type MojazConfigOverride = Partial<
-  Pick<MojazApiConfig, "baseUrl" | "clientKey" | "proxySecret" | "language">
+  Pick<MojazApiConfig, "baseUrl" | "clientKey" | "appId" | "appKey" | "language">
 >;
 
 export interface ResolvedOverride {
@@ -62,12 +62,14 @@ export function resolveOverride(request: NextRequest): ResolvedOverride | undefi
   const config: MojazConfigOverride = {};
   const baseUrl = request.headers.get("x-mojaz-base-url");
   const clientKey = request.headers.get("x-mojaz-client-key");
-  const proxySecret = request.headers.get("x-mojaz-proxy-secret");
+  const appId = request.headers.get("x-mojaz-app-id");
+  const appKey = request.headers.get("x-mojaz-app-key");
   const language = request.headers.get("x-mojaz-language");
 
   if (baseUrl) config.baseUrl = baseUrl;
   if (clientKey) config.clientKey = clientKey;
-  if (proxySecret) config.proxySecret = proxySecret;
+  if (appId) config.appId = appId;
+  if (appKey) config.appKey = appKey;
   if (language) config.language = language;
 
   const extraHeaders = parseExtraHeaders(request);

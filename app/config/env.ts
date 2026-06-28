@@ -10,7 +10,8 @@
 interface EnvironmentConfig {
   mojazBaseUrl: string;
   mojazClientKey: string;
-  mojazProxySecret: string;
+  mojazAppId: string;
+  mojazAppKey: string;
   mojazLanguage: string;
   requestTimeout: number;
   pollingInterval: number;
@@ -40,7 +41,8 @@ export function getEnvironmentConfig(): EnvironmentConfig {
     return {
       mojazBaseUrl: getEnvVariable("MOJAZ_BASE_URL"),
       mojazClientKey: getEnvVariable("MOJAZ_CLIENT_KEY"),
-      mojazProxySecret: getEnvVariable("MOJAZ_PROXY_SECRET"),
+      mojazAppId: getEnvVariable("MOJAZ_APP_ID"),
+      mojazAppKey: getEnvVariable("MOJAZ_APP_KEY"),
       mojazLanguage: getEnvVariable("MOJAZ_LANGUAGE", "ar"),
       requestTimeout: Number(getEnvVariable("MOJAZ_REQUEST_TIMEOUT", "30000")),
       pollingInterval: Number(getEnvVariable("MOJAZ_POLLING_INTERVAL", "2000")),

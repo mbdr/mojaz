@@ -47,7 +47,8 @@ See [.env.example](.env.example) for the full annotated list. The essentials:
 |---|---|---|
 | `MOJAZ_BASE_URL` | Yes | Mojaz API base URL |
 | `MOJAZ_CLIENT_KEY` | Yes | Mojaz API client key |
-| `MOJAZ_PROXY_SECRET` | Yes | Mojaz proxy secret |
+| `MOJAZ_APP_ID` | Yes | Mojaz API app id |
+| `MOJAZ_APP_KEY` | Yes | Mojaz API app key |
 | `MOJAZ_LANGUAGE` | No (default `ar`) | Default report language if a request doesn't specify one |
 | `MOJAZ_REQUEST_TIMEOUT` | No (default `30000`) | Per-HTTP-call timeout to Mojaz, ms |
 | `MOJAZ_POLLING_INTERVAL` | No (default `20000`) | Delay between report-ready polls, ms |
@@ -95,7 +96,7 @@ One-time setup:
 ```bash
 fly auth login
 fly launch --no-deploy   # creates the app on Fly using fly.toml; pick a different app name if "mojaz-international" is taken
-fly secrets set MOJAZ_BASE_URL=... MOJAZ_CLIENT_KEY=... MOJAZ_PROXY_SECRET=...
+fly secrets set MOJAZ_BASE_URL=... MOJAZ_CLIENT_KEY=... MOJAZ_APP_ID=... MOJAZ_APP_KEY=...
 ```
 
 Then either:

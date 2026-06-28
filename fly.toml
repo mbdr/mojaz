@@ -7,9 +7,9 @@ primary_region = 'iad'
 [build]
 
 # Non-secret defaults. Credentials (MOJAZ_BASE_URL, MOJAZ_CLIENT_KEY,
-# MOJAZ_PROXY_SECRET, CONFIG_OVERRIDE_TOKEN) are intentionally NOT set here -
-# this file is committed to git. Set them with:
-#   fly secrets set MOJAZ_BASE_URL=... MOJAZ_CLIENT_KEY=... MOJAZ_PROXY_SECRET=...
+# MOJAZ_APP_ID, MOJAZ_APP_KEY, MOJAZ_COOKIE, CONFIG_OVERRIDE_TOKEN) are
+# intentionally NOT set here - this file is committed to git. Set them with:
+#   fly secrets set MOJAZ_BASE_URL=... MOJAZ_CLIENT_KEY=... MOJAZ_APP_ID=... MOJAZ_APP_KEY=...
 [env]
   MOJAZ_LANGUAGE = 'ar'
   MOJAZ_POLLING_INTERVAL = '20000'
