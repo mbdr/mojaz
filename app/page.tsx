@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import {
   CheckCircle,
   ShieldCheck,
@@ -12,7 +11,6 @@ import {
   Wrench,
   Users,
   Gauge,
-  Settings2,
 } from "lucide-react";
 import { InternationalReportApiResponse } from "./types";
 import { LanguageSelector } from "./components/LanguageSelector";
@@ -153,13 +151,6 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-2">
             <LanguageSelector currentLanguage={language} onLanguageChange={handleLanguageChange} />
-            <Link
-              href="/settings"
-              aria-label={isRTL ? "إعدادات البيئة" : "Environment settings"}
-              className="flex h-9 w-9 items-center justify-center rounded-full text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
-            >
-              <Settings2 className="h-4 w-4" />
-            </Link>
           </div>
         </div>
       </header>
